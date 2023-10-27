@@ -15,7 +15,10 @@ function Students(props) {
       .then((response) => response.json())
       .then((students) => {
             setStudents(students);
-          });
+          })
+      .catch((err) => {
+        console.debug("Error loading students: ", err);
+      });
   }
 
   useEffect(() => {
@@ -72,7 +75,7 @@ function Students(props) {
     <div className="students">
       <h2> List of Students </h2>
       <ul>
-        {students.map((student) => {
+        {students ? students.map((student) => {
           if(student.id === editStudentId){
             //something needs to happento allow the user edit that existing student
             // At some point I need to pass the update function as props - connect this to the backend
@@ -80,13 +83,13 @@ function Students(props) {
           } else{
             return (
               <li key={student.id}>
-           {student.firstname} {student.lastname} 
+            {student.firstname} {student.lastname} 
            <button type="button" onClick={() =>{onEdit(student)}}>EDIT</button>
            <button type="button" onClick={() =>{onDelete(student)}}>DELETE</button>
         </li>
             )
           }
-        })}
+        }) : "Uh-oh, no students?"}
       </ul>
       {!user ? (<h4>Please signup to add students to our DB </h4>) : (<Form saveStudent={addStudent} />)}
       
