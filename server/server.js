@@ -32,6 +32,7 @@ app.get('/api/students', cors(), async (req, res) => {
    ];
    res.json(STUDENTS);*/
   try {
+    console.log("Querying students from database...");
     const { rows: students } = await db.query('SELECT * FROM students');
     res.send(students);
   } catch (e) {

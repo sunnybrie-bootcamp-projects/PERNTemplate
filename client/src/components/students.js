@@ -10,11 +10,15 @@ function Students(props) {
   const [editStudentId, setEditStudentId] = useState(null);
 
   const loadStudents = () =>{
+    console.log("Loading students...");
     // A function to fetch the list of students that will be load anytime that list change
     fetch("/api/students")
       .then((response) => response.json())
       .then((students) => {
-            setStudents(students);
+            let studArr = JSON.parse(students);
+            console.log({students});
+            console.log({studArr});
+            setStudents(studArr);
           })
       .catch((err) => {
         console.debug("Error loading students: ", err);
@@ -24,6 +28,8 @@ function Students(props) {
   useEffect(() => {
     loadStudents();
   }, []);
+
+  useEffect(()=>{},[students]);
 
   //A function to handle the Delete funtionality
   const onDelete = (student) =>{
